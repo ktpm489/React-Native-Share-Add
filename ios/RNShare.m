@@ -45,7 +45,9 @@
 #import "InstagramShare.h"
 #import "GooglePlusShare.h"
 #import "EmailShare.h"
-
+#import "TelegramShare.h"
+#import "RedditShare.h"
+#import "SkypeShare.h"
 @implementation RNShare
 - (dispatch_queue_t)methodQueue
 {
@@ -77,13 +79,25 @@ RCT_EXPORT_METHOD(shareSingle:(NSDictionary *)options
             NSLog(@"TRY OPEN whatsapp");
             WhatsAppShare *shareCtl = [[WhatsAppShare alloc] init];
             [shareCtl shareSingle:options failureCallback: failureCallback successCallback: successCallback];
-        } else if([social isEqualToString:@"instagram"]) {
-            NSLog(@"TRY OPEN instagram");
-            InstagramShare *shareCtl = [[InstagramShare alloc] init];
-            [shareCtl shareSingle:options failureCallback: failureCallback successCallback: successCallback];
         } else if([social isEqualToString:@"email"]) {
             NSLog(@"TRY OPEN email");
             EmailShare *shareCtl = [[EmailShare alloc] init];
+            [shareCtl shareSingle:options failureCallback: failureCallback successCallback: successCallback];
+        } else if([social isEqualToString:@"telegram"]) {
+            NSLog(@"TRY OPEN telegram");
+            TelegramShare *shareCtl = [[TelegramShare alloc] init];
+            [shareCtl shareSingle:options failureCallback: failureCallback successCallback: successCallback];
+        } else if([social isEqualToString:@"reddit"]) {
+            NSLog(@"TRY OPEN reddit");
+            RedditShare *shareCtl = [[RedditShare alloc] init];
+            [shareCtl shareSingle:options failureCallback: failureCallback successCallback: successCallback];
+        } else if ([social isEqualToString:@"skype"]){
+            NSLog(@"TRY OPEN skype");
+            SkypeShare *shareCtl = [[SkypeShare alloc] init];
+            [shareCtl shareSingle:options failureCallback: failureCallback successCallback: successCallback];
+        } else if([social isEqualToString:@"instagram"]) {
+            NSLog(@"TRY OPEN instagram");
+            InstagramShare *shareCtl = [[InstagramShare alloc] init];
             [shareCtl shareSingle:options failureCallback: failureCallback successCallback: successCallback];
         }
     } else {

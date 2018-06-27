@@ -11,16 +11,7 @@ Share Social , Sending Simple Data to Other Apps
 
 ### Manual install
 
-`npm install react-native-share --save`
-
-- [iOS](https://github.com/react-native-community/react-native-share#iOS-Install)
-
-- [Android](https://github.com/react-native-community/react-native-share#Android-Install)
-
-- [Windows](https://github.com/react-native-community/react-native-share#Windows-Install)
-
-
-#### iOS Install
+#### iOS
 
 1. `npm install react-native-share --save`
 2. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
@@ -38,7 +29,7 @@ Share Social , Sending Simple Data to Other Apps
 
 6. Run your project (`Cmd+R`)
 
-#### Android Install
+#### Android
 
 1. `npm install react-native-share --save`
 2. Open up `android/app/src/main/java/[...]/MainApplication.java`
@@ -111,15 +102,9 @@ Share Social , Sending Simple Data to Other Apps
 
     }
     ```
-7. When using targetSdkVersion 23 or greater, you might need to explicitly ask for permission otherwise sharing a base64 image will fail :
-  ```
-  const allowedStorage = await PermissionsAndroid.request(
-    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-  );
-  ```
-  
-#### Windows Install
-    
+
+
+#### Windows
 [Read it! :D](https://github.com/ReactWindows/react-native)
 
 1. `npm install react-native-share --save`
@@ -138,9 +123,7 @@ Open Simple share dialog
 Returns a promise that fulfills or rejects as soon as user successfully open the share action sheet or cancelled/failed to do so. As a result you might need to further handle the rejection while necessary. e.g.
 
 ```javascript
-  Share.open(options)
-    .then((res) => { console.log(res))
-    .catch((err) => { err && console.log(err); });
+Share.open(options).catch((err) => { err && console.log(err); })
 ```
 
 Supported options:
@@ -153,8 +136,6 @@ Supported options:
 | title | string   |  (optional) |
 | subject | string   | (optional) |
 | excludedActivityTypes | string   | (optional) |
-| failOnCancel | boolean | (defaults to true) On iOS, specifies whether promise should reject if user cancels share dialog (optional) |
-| showAppsToView | boolean | (optional) only android|
 
 #### shareSingle(options) (in iOS & Android)
 
@@ -405,68 +386,4 @@ For example, when share a `pdf` file from: `/storage/emulated/0/demo/test.pdf`, 
 
 ```
 url: "file:///storage/emulated/0/demo/test.pdf"
-```
-
-### Troubleshooting
-
-#### Share Remote PDF File with Gmail & WhatsApp (iOS)
-
-When sharing a pdf file with base64, there are two current problems.
-
-1. On WhatsApp base64 wont be recognized => nothing to share
-2. In the GmailApp the file extension is wrong (.dat). 
-
-Therefore we use this "workaround" in order to handle pdf sharing for iOS Apps to mentioned Apps
-
-1. Install react-native-fetch-blob
-2. Set a specific path in the RNFetchBlob configurations
-3. Download the PDF file to temp device storage
-4. Share the response's path() of the donwloaded file directly
-
-Code: 
-
-```
-static sharePDFWithIOS(fileUrl, type) {
-  let filePath = null;
-  let file_url_length = fileUrl.length;
-  const configOptions = {
-    fileCache: true,
-    path:
-      DIRS.DocumentDir + (type === 'application/pdf' ? '/SomeFileName.pdf' : '/SomeFileName.png') // no difference when using jpeg / jpg / png /
-  };
-  RNFetchBlob.config(configOptions)
-    .fetch('GET', fileUrl)
-    .then(async resp => {
-      filePath = resp.path();
-      let options = {
-        type: type,
-        url: filePath // (Platform.OS === 'android' ? 'file://' + filePath)
-      };
-      await Share.open(options);
-      // remove the image or pdf from device's storage
-      await RNFS.unlink(filePath);
-    });
-}
-```
-
-Nothing to do on Android. You can share the pdf file with base64
-
-```
-static sharePDFWithAndroid(fileUrl, type) {
-  let filePath = null;
-  let file_url_length = fileUrl.length;
-  const configOptions = { fileCache: true };
-  RNFetchBlob.config(configOptions)
-    .fetch('GET', fileUrl)
-    .then(resp => {
-      filePath = resp.path();
-      return resp.readFile('base64');
-    })
-    .then(async base64Data => {
-      base64Data = `data:${type};base64,` + base64Data;
-      await Share.open({ url: base64Data });
-      // remove the image or pdf from device's storage
-      await RNFS.unlink(filePath);
-    });
-}
 ```

@@ -1,11 +1,13 @@
 //
-//  InstagramShare.h
+//  TelegramShare.h
 //  RNShare
 //
 //  Created by Macintosh on 6/26/18.
 //  Copyright © 2018 Facebook. All rights reserved.
 //
 
+
+#import <Social/Social.h>
 #import <UIKit/UIKit.h>
 // import RCTConvert
 #if __has_include(<React/RCTConvert.h>)
@@ -47,7 +49,9 @@
 #else
 #import "React/RCTUtils.h"   // Required when used as a Pod in a Swift project
 #endif
-@interface InstagramShare : NSObject <RCTBridgeModule>
+@interface TelegramShare : NSObject <RCTBridgeModule>
 
-- (void *) shareSingle:(NSDictionary *)options failureCallback:(RCTResponseErrorBlock)failureCallback successCallback:(RCTResponseSenderBlock)successCallback;
+- (void *) shareSingle:(NSDictionary *)options
+       failureCallback:(RCTResponseErrorBlock)failureCallback
+       successCallback:(RCTResponseSenderBlock)successCallback;
 @end

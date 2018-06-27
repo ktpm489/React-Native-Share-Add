@@ -1,10 +1,3 @@
-//
-//  InstagramShare.m
-//  RNShare
-//
-//  Created by Ralf Nieuwenhuizen on 12-04-17.
-//
-
 #import "InstagramShare.h"
 #import <AVFoundation/AVFoundation.h>
 
@@ -14,14 +7,14 @@
     successCallback:(RCTResponseSenderBlock)successCallback {
     
     NSLog(@"Try open view");
-
+    
     NSURL * fileURL = [NSURL URLWithString: options[@"url"]];
     AVURLAsset* videoAsset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
     CMTime videoDuration = videoAsset.duration;
     float videoDurationSeconds = CMTimeGetSeconds(videoDuration);
-
+    
     NSLog(@"Video duration: %f seconds for file %@", videoDurationSeconds, videoAsset.URL.absoluteString);
-        
+    
     NSURL * shareURL;
     // Instagram doesn't allow sharing videos longer than 60 seconds on iOS anymore. (next button is not responding, trim is unavailable)
     if (videoDurationSeconds <= 60.0f) {
@@ -46,7 +39,7 @@
         
         NSLog(errorMessage);
         failureCallback(error);
-    } 
+    }
 }
 
 @end

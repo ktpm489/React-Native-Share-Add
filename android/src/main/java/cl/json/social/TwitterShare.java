@@ -35,5 +35,6 @@ public class TwitterShare extends SingleShareIntent {
     @Override
     protected String getPlayStoreLink() {
         return null;
+
     }
 }

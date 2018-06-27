@@ -22,6 +22,9 @@ import cl.json.social.ShareIntent;
 import cl.json.social.TwitterShare;
 import cl.json.social.WhatsAppShare;
 import cl.json.social.InstagramShare;
+import cl.json.social.SkypeShare;
+import cl.json.social.TelegramShare;
+import cl.json.social.RedditShare;
 
 public class RNShareModule extends ReactContextBaseJavaModule {
 
@@ -34,9 +37,13 @@ public class RNShareModule extends ReactContextBaseJavaModule {
         sharesExtra.put("facebook", new FacebookShare(this.reactContext));
         sharesExtra.put("twitter", new TwitterShare(this.reactContext));
         sharesExtra.put("whatsapp",new WhatsAppShare(this.reactContext));
-        sharesExtra.put("instagram",new InstagramShare(this.reactContext));
         sharesExtra.put("googleplus",new GooglePlusShare(this.reactContext));
         sharesExtra.put("email",new EmailShare(this.reactContext));
+        sharesExtra.put("instagram",new InstagramShare(this.reactContext));
+        sharesExtra.put("reddit",new RedditShare(this.reactContext));
+        sharesExtra.put("skype",new SkypeShare(this.reactContext));
+        sharesExtra.put("telegram",new TelegramShare(this.reactContext));
+
         //  add more customs single intent shares here
     }
 
